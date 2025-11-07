@@ -68,3 +68,7 @@
         -webkit-transform: scaleY(1.0);
     }
 }
+#root{
+    padding-bottom :0px !important;
+}
+@import "tailwindcss";

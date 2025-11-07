@@ -1,31 +1,47 @@
 import "./App.css";
-
 import About from "./components/About/About";
 import Contact from "./components/Contact/Contact";
-import Home from './components/Home/Home';
 import Layout from "./components/Layout/Layout";
-import Parent from "./components/Parent/Parent";
+import NotFound from "./components/NotFound/NotFound";
+import Gallery from "./components/Gallary/Gallery";
+import Cart from "./components/Parent/Cart";
 import { createHashRouter, RouterProvider } from "react-router-dom";
-import NotFound from './components/NotFound/NotFound';
-import Gallery from './components/Gallary/Gallery';
+import CartContextProvider from "./components/Home/CartContext/CartContext";
+import UserProvider, { UserContext } from "./components/UserContext/UserContext";
+import Auth from "./components/Auth/Auth";
+import { useContext } from "react";
 
-let _router = createHashRouter([  
+function ProtectedRoute({ children }) {
+  const { userToken } = useContext(UserContext);
+  if (!userToken) return <Auth />;
+  return children;
+}
+
+const _router = createHashRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <Auth /> }, // افتراضي لو Home مش جاهز
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
-      { path: "parent", element: <Parent /> },
+      { path: "cart", element: <Cart /> },
       { path: "gallery", element: <Gallery /> },
       { path: "*", element: <NotFound /> },
     ],
   },
 ]);
 
-function App() {
-  return <RouterProvider router={_router} />;
+export default function App() {
+  return (
+    <UserProvider>
+      <CartContextProvider>
+        <RouterProvider router={_router} />
+      </CartContextProvider>
+    </UserProvider>
+  );
 }
-
-export default App;

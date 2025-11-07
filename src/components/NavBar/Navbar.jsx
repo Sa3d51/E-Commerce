@@ -1,23 +1,27 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
+
 export default function Navbar() {
   return (
-    <div
+    <nav
       id="navbar"
-      className=" navbar bg-danger w-100  p-3 fixed-top text-white text-center"
+      className="navbar bg-danger w-100 py-2 px-3 fixed-top text-white"
+      style={{
+        minHeight: "60px",
+      }}
     >
-      <ul className="list-unstyled d-flex gap-4 mb-0 pb-0">
+      <ul className="list-unstyled d-flex justify-content-between align-items-center mb-0 w-100">
         <li>
           <NavLink
             to="/"
-            className="navbar-brand text-white text-uppercase fw-bolder fs-2"
+            className="navbar-brand text-white text-uppercase fw-bolder fs-5"
           >
-            {" "}
-            All Products
+            Home
           </NavLink>
         </li>
-        <div className="d-flex gap-4 align-items-center ">
+
+        <div className="d-flex gap-4 align-items-center">
           <li>
             <NavLink to="about" className="text-decoration-none text-white">
               About
@@ -29,17 +33,17 @@ export default function Navbar() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="parent" className="text-decoration-none text-white">
+            <NavLink to="cart" className="text-decoration-none text-white">
               Cart
             </NavLink>
           </li>
           <li>
-            <NavLink to="Gallery" className="text-decoration-none text-white">
-              Gallery
+            <NavLink to="gallery" className="text-decoration-none text-white">
+              Checkout
             </NavLink>
           </li>
         </div>
       </ul>
-    </div>
+    </nav>
   );
 }
