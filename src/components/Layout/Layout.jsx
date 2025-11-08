@@ -5,14 +5,12 @@ import Navbar from "./../NavBar/Navbar";
 
 export default function Layout() {
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Navbar />
-
-      <div className="container py-5 my-4">
+      <main className="flex-grow-1 container py-4 mt-4">
         <Outlet />
-      </div>
-
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }

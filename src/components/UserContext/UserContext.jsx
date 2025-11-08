@@ -1,6 +1,6 @@
-// src/components/Auth/UserContext.jsx
 import { createContext, useState, useEffect } from "react";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {

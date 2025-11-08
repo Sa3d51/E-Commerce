@@ -1,3 +1,121 @@
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 #navbar {
-    height: 100px;
+  height: 60px;
+  background-color: #dc3545;
+  transition: all 0.3s ease-in-out;
+  z-index: 1030;
+  padding: 6px 16px;
+  min-height: 50px;
+  line-height: 1;
+}
+
+.navbar-fade-in {
+  animation: fadeSlideDown 0.45s ease-out forwards;
+}
+
+.navbar-scrolled {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transform: scale(0.995);
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-link-like {
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.2s ease;
+}
+
+.nav-link-like::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 0%;
+  background: rgba(255, 255, 255, 0.95);
+  transition: width 0.2s ease;
+  border-radius: 2px;
+}
+
+.nav-link-like:hover::after {
+  width: 100%;
+}
+
+.nav-link-like:hover {
+  color: #ffe6e6 !important;
+}
+
+.badge {
+  font-size: 0.7rem !important;
+}
+
+.mobile-menu {
+  animation: fadeIn 0.3s ease;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.mobile-menu.open {
+  display: flex !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  #navbar {
+    padding: 4px 10px;
+    height: auto;
+  }
+
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+
+  .mobile-menu a {
+    font-size: 1rem;
+    padding: 6px 0;
+    display: block;
+  }
+
+  .btn-outline-light {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  #navbar {
+    padding: 3px 10px;
+    min-height: 36px;
+  }
+
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  .mobile-menu {
+    font-size: 0.9rem;
+  }
 }

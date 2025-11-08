@@ -1,44 +1,64 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./About.css";
 
 export default function About() {
+  const navigate = useNavigate();
+
   return (
-    <div className="container py-5" style={{ paddingTop: "100px", maxWidth: "800px" }}>
-      <h2 className="text-center fw-bold text-danger mb-4">About Us</h2>
-
-      <p className="text-muted lead text-center mb-5">
-        We are passionate about crafting seamless digital experiences that connect people, inspire trust, and deliver value.
-      </p>
-
-      <div className="mb-5">
-        <h4 className="fw-semibold mb-3 text-dark">Our Mission</h4>
-        <p className="text-secondary">
-          Our mission is to provide high-quality products and services that combine performance, design, and reliability. 
-          We believe in innovation, transparency, and continuous improvement to meet the needs of our customers.
+    <div className="about-container container py-5 px-3 px-md-5">
+      <div className="text-center mb-5 fade-up">
+        <h2 className="fw-bold text-danger fs-1 fs-md-2">About Us</h2>
+        <p className="text-muted fs-6 fs-md-5">
+          We’re redefining online shopping — fast, easy, and reliable.
         </p>
       </div>
 
-      <div className="mb-5">
-        <h4 className="fw-semibold mb-3 text-dark">Our Vision</h4>
-        <p className="text-secondary">
-          We aim to become a trusted brand that people rely on globally, recognized for integrity, creativity, and customer satisfaction. 
-          Our focus is to build a digital environment where technology simplifies life.
-        </p>
+      <div className="row g-4 text-center justify-content-center">
+        <div className="col-10 col-sm-8 col-md-4 fade-up delay-1">
+          <div className="p-4 border rounded-4 shadow-sm bg-white h-100 d-flex flex-column align-items-center justify-content-center">
+            <div className="fs-1 mb-3">🚀</div>
+            <h5 className="fw-bold text-danger fs-5">Our Mission</h5>
+            <p className="text-muted fs-6">
+              To make online shopping in Egypt simple, affordable, and enjoyable
+              for everyone.
+            </p>
+          </div>
+        </div>
+
+        <div className="col-10 col-sm-8 col-md-4 fade-up delay-2">
+          <div className="p-4 border rounded-4 shadow-sm bg-white h-100 d-flex flex-column align-items-center justify-content-center">
+            <div className="fs-1 mb-3">💎</div>
+            <h5 className="fw-bold text-danger fs-5">Our Values</h5>
+            <p className="text-muted fs-6">
+              Trust, quality, and customer satisfaction are at the heart of
+              everything we do.
+            </p>
+          </div>
+        </div>
+
+        <div className="col-10 col-sm-8 col-md-4 fade-up delay-3">
+          <div className="p-4 border rounded-4 shadow-sm bg-white h-100 d-flex flex-column align-items-center justify-content-center">
+            <div className="fs-1 mb-3">⚡</div>
+            <h5 className="fw-bold text-danger fs-5">Our Promise</h5>
+            <p className="text-muted fs-6">
+              Fast delivery, secure payments, and genuine products every time.
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div className="mb-5">
-        <h4 className="fw-semibold mb-3 text-dark">Our Values</h4>
-        <ul className="list-unstyled text-secondary ps-3">
-          <li>✅ Integrity — honesty and openness in everything we do.</li>
-          <li>✅ Innovation — always exploring smarter ways to improve.</li>
-          <li>✅ Customer First — your satisfaction is our top priority.</li>
-          <li>✅ Teamwork — success comes through collaboration.</li>
-        </ul>
-      </div>
-
-      <div className="text-center border-top pt-4">
-        <p className="text-muted small mb-0">
-          © 2025 Your Company. Designed with ❤️ by our creative team.
+      <div className="text-center mt-5 fade-up delay-4">
+        <h5 className="fw-bold mb-2 text-danger fs-5">Join Our Journey</h5>
+        <p className="text-muted mb-3 fs-6">
+          Be part of the next generation of smarter shopping.
         </p>
+        <button
+          onClick={() => navigate("/home")}
+          className="btn btn-danger px-4 py-2 fw-semibold rounded-3"
+        >
+          Shop Now
+        </button>
       </div>
     </div>
   );
