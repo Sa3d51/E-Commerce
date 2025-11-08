@@ -9,7 +9,6 @@ export default function Navbar() {
   const { cartItems = [] } = useContext(CartContext);
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const nav = document.getElementById("navbar");
@@ -37,34 +36,19 @@ export default function Navbar() {
         scrolled ? "navbar-scrolled shadow-sm" : ""
       }`}
     >
-      <div className="container-fluid d-flex justify-content-between align-items-center">
+      <div className="container-fluid d-flex justify-content-between align-items-center flex-wrap">
         <NavLink
           to="/home"
-          className="navbar-brand text-white text-uppercase fw-bold fs-5"
+          className="navbar-brand text-white text-uppercase fw-bold fs-5 me-3"
         >
           Home
         </NavLink>
 
-        <button
-          className="btn btn-outline-light d-md-none"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation"
-        >
-          <i className={`fa ${menuOpen ? "fa-times" : "fa-bars"}`}></i>
-        </button>
-
-        <ul
-          className={`list-unstyled d-md-flex align-items-center gap-4 mb-0 ${
-            menuOpen
-              ? "mobile-menu open d-flex flex-column text-center bg-danger w-100 mt-3 p-3 rounded"
-              : "d-none d-md-flex"
-          }`}
-        >
+        <ul className="list-unstyled d-flex flex-wrap align-items-center gap-3 mb-0">
           <li>
             <NavLink
               to="/home/about"
               className="nav-link-like text-white fw-medium"
-              onClick={() => setMenuOpen(false)}
             >
               About
             </NavLink>
@@ -73,7 +57,6 @@ export default function Navbar() {
             <NavLink
               to="/home/contact"
               className="nav-link-like text-white fw-medium"
-              onClick={() => setMenuOpen(false)}
             >
               Contact
             </NavLink>
@@ -82,7 +65,6 @@ export default function Navbar() {
             <NavLink
               to="/home/cart"
               className="nav-link-like text-white fw-medium position-relative"
-              onClick={() => setMenuOpen(false)}
             >
               Cart
               {totalItems > 0 && (
@@ -96,7 +78,6 @@ export default function Navbar() {
             <NavLink
               to="/home/checkout"
               className="nav-link-like text-white fw-medium"
-              onClick={() => setMenuOpen(false)}
             >
               Checkout
             </NavLink>
@@ -104,11 +85,8 @@ export default function Navbar() {
           {userToken && (
             <li>
               <button
-                onClick={() => {
-                  handleLogout();
-                  setMenuOpen(false);
-                }}
-                className="btn btn-outline-light btn-sm mt-2 mt-md-0"
+                onClick={handleLogout}
+                className="btn btn-outline-light btn-sm"
               >
                 Logout
               </button>

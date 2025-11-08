@@ -70,7 +70,11 @@ export default function Home() {
   const handleDecrease = (product) => {
     const id = product.id || product._id;
     if (!productCounts[id]) return;
-    decreaseFromCart(id, false);
+    if (typeof decreaseFromCart === "function") {
+      decreaseFromCart(id, false);
+    } else {
+      console.error("❌ decreaseFromCart is not a function");
+    }
   };
 
   return (
@@ -83,8 +87,8 @@ export default function Home() {
 
             return (
               <div
-                className="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 animate-on-scroll"
                 key={id}
+                className="col-12 col-sm-6 col-md-4 col-lg-3  animate-on-scroll"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="item text-center border rounded-4 p-3 h-100 d-flex flex-column justify-content-between shadow-sm bg-white hover-scale">

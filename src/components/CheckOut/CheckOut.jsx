@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { CartContext } from "../Home/CartContext/CartContext";
 
 export default function Checkout() {
-  const { cartItems, clearCart, addToCart, decreaseQuantity } =
+  const { cartItems, clearCart, addToCart, decreaseFromCart } =
     useContext(CartContext);
   const [form, setForm] = useState({
     name: "",
@@ -67,7 +67,7 @@ export default function Checkout() {
                         </small>
                         <div className="d-flex justify-content-center justify-content-sm-start align-items-center gap-2">
                           <button
-                            onClick={() => decreaseQuantity(p.id || p._id)}
+                            onClick={() => decreaseFromCart(p.id || p._id)}
                             className="btn btn-outline-danger btn-sm px-2 py-0"
                           >
                             −
