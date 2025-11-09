@@ -1,0 +1,61 @@
+.categories-container {
+  animation: fadeSlideUp 0.5s ease;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.category-card {
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: #fff;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.category-card .image-wrapper {
+  height: 160px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff; /* 👈 خلفية بيضاء للصورة */
+}
+
+.category-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 👈 الصورة هتظهر كاملة بدون قص */
+  transition: transform 0.4s ease;
+}
+
+.category-card:hover img {
+  transform: scale(1.05);
+}
+
+@media (max-width: 576px) {
+  .category-card .image-wrapper {
+    height: 140px;
+  }
+
+  .category-card h6 {
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .category-card .image-wrapper {
+    height: 150px;
+  }
+}

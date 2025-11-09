@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { CartContext } from "./../Home/CartContext/CartContext";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const { cartItems, addToCart, decreaseFromCart, removeFromCart, clearCart } =
@@ -55,14 +56,23 @@ export default function Cart() {
           </div>
         ))}
       </div>
+
       <div className="text-center mt-4">
         <h4 className="mb-3 fw-semibold">Total: {totalPrice.toFixed(2)} EGP</h4>
-        <button
-          onClick={clearCart}
-          className="btn btn-danger px-4 py-2 fw-semibold"
-        >
-          Clear Cart
-        </button>
+        <div className="d-flex justify-content-center gap-3">
+          <button
+            onClick={clearCart}
+            className="btn btn-danger px-4 py-2 fw-semibold"
+          >
+            Clear Cart
+          </button>
+          <Link
+            to="/home/checkout"
+            className="btn btn-success px-4 py-2 fw-semibold"
+          >
+            Go to Checkout
+          </Link>
+        </div>
       </div>
     </div>
   );

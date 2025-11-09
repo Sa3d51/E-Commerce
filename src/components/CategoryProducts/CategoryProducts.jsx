@@ -1,73 +1,54 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
-import { CartContext } from "./CartContext/CartContext";
-import "./Home.css";
+import { useParams } from "react-router-dom";
+import { CartContext } from "../Home/CartContext/CartContext";
 
-export default function Home() {
-  const [apiProduct, setApiProduct] = useState([]);
-  const [productCounts, setProductCounts] = useState({});
+export default function CategoryProducts() {
+  const { id } = useParams();
+  const [products, setProducts] = useState([]);
   const { addToCart, decreaseFromCart, cartItems } = useContext(CartContext);
 
   useEffect(() => {
-    const savedProducts = localStorage.getItem("products");
-    if (savedProducts) {
-      setApiProduct(JSON.parse(savedProducts));
-    } else {
-      async function fetchProducts() {
-        try {
-          const { data } = await axios.get(
-            "https://ecommerce.routemisr.com/api/v1/products"
-          );
-          setApiProduct(data.data);
-          localStorage.setItem("products", JSON.stringify(data.data));
-        } catch (err) {
-          console.error("Error fetching products:", err);
-        }
+    async function fetchProducts() {
+      try {
+        const { data } = await axios.get(
+          `https://ecommerce.routemisr.com/api/v1/products?category=${id}`
+        );
+        setProducts(data.data);
+      } catch (err) {
+        console.error("Error fetching category products:", err);
       }
-      fetchProducts();
     }
+    fetchProducts();
+  }, [id]);
 
-    const savedCounts = JSON.parse(
-      localStorage.getItem("productCounts") || "{}"
-    );
-    setProductCounts(savedCounts);
-  }, []);
-
-  useEffect(() => {
-    const newCounts = {};
-    cartItems.forEach((item) => {
-      const id = item.id || item._id;
-      newCounts[id] = item.quantity;
-    });
-    setProductCounts(newCounts);
-    localStorage.setItem("productCounts", JSON.stringify(newCounts));
-  }, [cartItems]);
-
-  const handleAddToCart = (product) => addToCart(product, false);
-  const handleDecrease = (product) => {
-    const id = product.id || product._id;
-    if (!productCounts[id]) return;
-    if (typeof decreaseFromCart === "function") {
-      decreaseFromCart(id, false);
-    }
+  const getQuantity = (productId) => {
+    const item = cartItems.find((i) => i.id === productId || i._id === productId);
+    return item ? item.quantity : 0;
   };
+
+  const handleAddToCart = (product) => addToCart(product);
+  const handleDecrease = (product) => decreaseFromCart(product.id || product._id);
 
   return (
     <div className="container py-4">
       <div className="row g-3 justify-content-center">
-        {apiProduct.length > 0 ? (
-          apiProduct.map((product) => {
+        {products.length > 0 ? (
+          products.map((product) => {
             const id = product.id || product._id;
-            const count = productCounts[id] || 0;
-
+            const count = getQuantity(id);
             return (
-              <div key={id} className="col-6 col-md-4 col-lg-3">
-                <div className="item text-center border rounded-4 p-2 h-100 d-flex flex-column justify-content-between shadow-sm bg-white product-card">
+              <div
+                key={id}
+                className="col-12 col-sm-6 col-md-4 col-lg-3"
+              >
+                <div className="item text-center border rounded-4 p-3 h-100 d-flex flex-column justify-content-between shadow-sm bg-white">
                   <div className="flex-grow-1">
                     <img
-                      className="product-image w-100 rounded-3 mb-2"
+                      className="w-100 rounded-3 mb-2"
                       src={product.imageCover}
                       alt={product.title}
+                      style={{ height: "160px", objectFit: "cover" }}
                     />
                     <h6 className="fw-bold text-truncate">{product.title}</h6>
                     <p className="text-muted small mb-1">
@@ -82,7 +63,7 @@ export default function Home() {
                   </div>
 
                   {count > 0 ? (
-                    <div className="d-flex justify-content-between align-items-center mt-2">
+                    <div className="d-flex justify-content-between align-items-center mt-3">
                       <button
                         onClick={() => handleDecrease(product)}
                         className="btn btn-outline-danger btn-sm"
@@ -100,7 +81,7 @@ export default function Home() {
                   ) : (
                     <button
                       onClick={() => handleAddToCart(product)}
-                      className="btn btn-danger w-100 mt-2 fw-semibold"
+                      className="btn btn-danger w-100 mt-3 fw-semibold"
                     >
                       Add to Cart
                     </button>

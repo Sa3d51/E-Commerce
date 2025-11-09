@@ -5,14 +5,21 @@ import Layout from "./components/Layout/Layout";
 import NotFound from "./components/NotFound/NotFound";
 import Home from "./components/Home/Home";
 import Cart from "./components/Parent/Cart";
-import { createHashRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import CartContextProvider from "./components/Home/CartContext/CartContext";
 import UserProvider, { UserContext } from "./components/UserContext/UserContext";
 import Auth from "./components/Auth/Auth";
-import { useContext } from "react";
+import { useContext, Suspense } from "react";
 import CheckOut from "./components/CheckOut/CheckOut";
 import { Toaster } from "react-hot-toast";
 import { AnimatePresence, motion } from "framer-motion";
+import Categories from "./components/Categories/Categories";
+import CategoryProducts from "./components/CategoryProducts/CategoryProducts";
 
 function ProtectedRoute({ children }) {
   const { userToken } = useContext(UserContext);
@@ -39,73 +46,98 @@ function AnimatedPage({ children }) {
   );
 }
 
-const _router = createHashRouter([
-  { path: "/", element: <Auth /> },
-  {
-    path: "/home",
-    element: (
-      <ProtectedRoute>
-        <Layout />
-      </ProtectedRoute>
-    ),
-    children: [
-      {
-        index: true,
-        element: (
-          <AnimatedPage>
-            <Home />
-          </AnimatedPage>
-        ),
-      },
-      {
-        path: "contact",
-        element: (
-          <AnimatedPage>
-            <Contact />
-          </AnimatedPage>
-        ),
-      },
-      {
-        path: "cart",
-        element: (
-          <AnimatedPage>
-            <Cart />
-          </AnimatedPage>
-        ),
-      },
-      {
-        path: "checkout",
-        element: (
-          <AnimatedPage>
-            <CheckOut />
-          </AnimatedPage>
-        ),
-      },
-      {
-        path: "about",
-        element: (
-          <AnimatedPage>
-            <About />
-          </AnimatedPage>
-        ),
-      },
-      {
-        path: "*",
-        element: (
-          <AnimatedPage>
-            <NotFound />
-          </AnimatedPage>
-        ),
-      },
-    ],
-  },
-]);
-
 export default function App() {
   return (
     <UserProvider>
       <CartContextProvider>
-        <RouterProvider router={_router} />
+        <Suspense fallback={<div className="text-center mt-5">Loading...</div>}>
+          <BrowserRouter basename="/E-Commerce">
+            <Routes>
+              <Route path="/" element={<Auth />} />
+              <Route
+                path="/home"
+                element={
+                  <ProtectedRoute>
+                    <Layout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route
+                  index
+                  element={
+                    <AnimatedPage>
+                      <Categories />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="categories"
+                  element={
+                    <AnimatedPage>
+                      <Categories />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="categories/:id"
+                  element={
+                    <AnimatedPage>
+                      <CategoryProducts />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="all-products"
+                  element={
+                    <AnimatedPage>
+                      <Home />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="contact"
+                  element={
+                    <AnimatedPage>
+                      <Contact />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="cart"
+                  element={
+                    <AnimatedPage>
+                      <Cart />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="checkout"
+                  element={
+                    <AnimatedPage>
+                      <CheckOut />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="about"
+                  element={
+                    <AnimatedPage>
+                      <About />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="*"
+                  element={
+                    <AnimatedPage>
+                      <NotFound />
+                    </AnimatedPage>
+                  }
+                />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </Suspense>
         <Toaster position="top-right" reverseOrder={false} />
       </CartContextProvider>
     </UserProvider>
